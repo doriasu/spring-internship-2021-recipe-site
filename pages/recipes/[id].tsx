@@ -43,24 +43,25 @@ const RecipePage: FC = () => {
 					<b>{recipe.title}</b>
 				</h1>
 			) : null}
+			{recipe !== null ? <h1>{recipe.published_at}</h1> : null}
 			{recipe !== null ? <h1>{recipe.author.user_name}</h1> : null}
 			{recipe !== null ? <h1>{recipe.description}</h1> : null}
 			{recipe !== null ? <img src={recipe.image_url} /> : null}
 			<h1>
 				<b>調理手順</b>
 			</h1>
-				<ol className="list-decimal list-inside">
-					{recipe !== null
-						? recipe.steps.map((text) => {
-								return (
-									<div>
-										<li key={text}>{text}</li>
-										<br />
-									</div>
-								);
-						  })
-						: null}
-				</ol>
+			<ol className="list-decimal list-inside">
+				{recipe !== null
+					? recipe.steps.map((text) => {
+							return (
+								<div>
+									<li key={text}>{text}</li>
+									<br />
+								</div>
+							);
+					  })
+					: null}
+			</ol>
 
 			<h1>
 				<b>材料</b>
