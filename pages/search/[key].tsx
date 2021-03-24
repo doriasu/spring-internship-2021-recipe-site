@@ -30,7 +30,7 @@ const searchPage: FC = () => {
 			<SearchBar />
 			<br />
 			<h1>
-                <b>{ key+"の検索結果"}</b>
+				<b>{key + "の検索結果"}</b>
 			</h1>
 			<div className="grid grid-cols-2">
 				{recipes
