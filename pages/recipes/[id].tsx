@@ -35,18 +35,19 @@ const RecipePage: FC = () => {
 			}
 		})();
 	}, [id]);
+	if (recipe === null) {
+		return <div>Now Loading...</div>;
+	}
 	return (
 		<div>
 			<SearchBar />
-			{recipe !== null ? (
-				<h1>
-					<b>{recipe.title}</b>
-				</h1>
-			) : null}
-			{recipe !== null ? <h1>{recipe.published_at}</h1> : null}
-			{recipe !== null ? <h1>{recipe.author.user_name}</h1> : null}
-			{recipe !== null ? <h1>{recipe.description}</h1> : null}
-			{recipe !== null ? <img src={recipe.image_url} /> : null}
+			<h1>
+				<b>{recipe.title}</b>
+			</h1>
+			<h1>{recipe.published_at}</h1>
+			<h1>{recipe.author.user_name}</h1>
+			<h1>{recipe.description}</h1>
+			<img src={recipe.image_url} />
 			<h1>
 				<b>調理手順</b>
 			</h1>
