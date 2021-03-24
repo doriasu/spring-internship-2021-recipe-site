@@ -54,14 +54,15 @@ const searchPage: FC = () => {
 			</div>
 			<br />
 			<div className="grid grid-cols-2">
-				<button onClick={() => {
-					if (pagenum > 1) {
-						router.push({
-							pathname: "/search/" + key,
-							query:{num:pagenum -1}
-						})
-					}
-				} }>Prev</button>
+				{pagenum > 1 ? (
+					<button onClick={() => {
+						if (pagenum > 1) {
+							router.push({
+								pathname: "/search/" + key,
+								query: { num: pagenum - 1 }
+							})
+						}
+					}}>Prev</button>) : (<div></div>)}
 				<button onClick={() => {
 						router.push({
 							pathname: "/search/" + key,
