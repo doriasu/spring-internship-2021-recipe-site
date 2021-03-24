@@ -49,17 +49,24 @@ const RecipePage: FC = () => {
 			<h1>
 				<b>調理手順</b>
 			</h1>
-			<ol className="list-decimal">
-				{recipe !== null
-					? recipe.steps.map((text) => {
-							return <li key={text}>{text}</li>;
-					  })
-					: null}
-			</ol>
+			<div>
+				<ol className="list-decimal list-inside">
+					{recipe !== null
+						? recipe.steps.map((text) => {
+								return (
+									<div>
+										<li key={text}>{text}</li>
+										<br />
+									</div>
+								);
+						  })
+						: null}
+				</ol>
+			</div>
 			<h1>
 				<b>材料</b>
 			</h1>
-			<ul className="list-disc">
+			<ul className="list-disc list-inside">
 				{recipe !== null
 					? recipe.ingredients.map((text) => {
 							return (
