@@ -49,7 +49,6 @@ const RecipePage: FC = () => {
 			<h1>
 				<b>調理手順</b>
 			</h1>
-			<div>
 				<ol className="list-decimal list-inside">
 					{recipe !== null
 						? recipe.steps.map((text) => {
@@ -62,7 +61,7 @@ const RecipePage: FC = () => {
 						  })
 						: null}
 				</ol>
-			</div>
+
 			<h1>
 				<b>材料</b>
 			</h1>

@@ -35,10 +35,22 @@ export const SearchBar: FC = () => {
 };
 const mainPage: FC = () => {
 	const [recipes, setRecipes] = useState<Recipe[]>([]);
+	const router = useRouter();
+	const [pagenum, setPagenum] = useState<number>(1);
+	let num: number|null = +router.query.num;
 	useEffect(() => {
 		(async () => {
+			setPagenum(num ? num : 1);
+			const base_url = new URL(
+				"https://internship-recipe-api.ckpd.co/recipes"
+			);
+			if (
+				num&&num>1
+			) {
+				base_url.searchParams.set("page", router.query.num as string);
+			}
 			const res = await fetch(
-				"https://internship-recipe-api.ckpd.co/recipes",
+				base_url.toString(),
 				{
 					headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
 				}
@@ -46,7 +58,7 @@ const mainPage: FC = () => {
 			const recipes = await res.json();
 			setRecipes(recipes["recipes"] as Recipe[]);
 		})();
-	}, []);
+	}, [num]);
 	return (
 		<div>
 			<SearchBar />
@@ -66,6 +78,31 @@ const mainPage: FC = () => {
 							) : null;
 					  })
 					: null}
+			</div>
+			<br />
+			<div className="grid grid-cols-2">
+				<button
+					onClick={() => {
+						if (pagenum > 1) {
+							router.push({
+								pathname: "",
+								query: { num: pagenum - 1 },
+							});
+						}
+					}}
+				>
+					Prev
+				</button>
+				<button
+					onClick={() => {
+						router.push({
+							pathname: "" ,
+							query: { num: pagenum + 1 },
+						});
+					}}
+				>
+					Next
+				</button>
 			</div>
 		</div>
 	);
