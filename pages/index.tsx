@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import Head from 'next/head'
 export const SearchBar: FC = () => {
 	const [searchtext, setSearchtext] = useState("");
 	const [searchresult, setSearchresult] = useState("");
@@ -50,16 +51,18 @@ const mainPage: FC<mainProps> = (props) => {
 	}, [props]);
 	return (
 		<div className="bg-red-50 font-mono">
-			<meta property="og:title" content="Recipe Servoce" />
-			<meta property="og:type" content="website" />
-			<meta
-				property="og:url"
-				content="https://takuro-spring-internship-2021-recipe-site.vercel.app/"
-			/>
-			<meta
-				property="og:image"
-				content={props.recipes[0].image_url}
-			/>
+			<Head>
+				<meta property="og:title" content="Recipe Servoce" />
+				<meta property="og:type" content="website" />
+				<meta
+					property="og:url"
+					content="https://takuro-spring-internship-2021-recipe-site.vercel.app/"
+				/>
+				<meta
+					property="og:image"
+					content={props.recipes[0].image_url}
+				/>
+			</Head>
 			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />
@@ -136,7 +139,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			recipes: recipes,
-			num: num?num:1,
+			num: num ? num : 1,
 		},
 	};
 };
