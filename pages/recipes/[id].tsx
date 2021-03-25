@@ -8,6 +8,7 @@ import Head from "../../components/head";
 import Image from "next/image";
 type Props = {
 	recipe: Recipe;
+	id: number;
 };
 const RecipePage: FC<Props> = (prop) => {
 	const router = useRouter();
@@ -48,7 +49,7 @@ const RecipePage: FC<Props> = (prop) => {
 						? recipe.image_url
 						: "https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
 				}
-				url={router.pathname}
+				url={"https://takuro-spring-internship-2021-recipe-site.vercel.app/recipes/"+String(prop.id)}
 			/>
 			<div className="ml-4 mr-4">
 				<SearchBar />
@@ -168,6 +169,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			recipe: recipe_,
+			id:id
 		},
 	};
 };
