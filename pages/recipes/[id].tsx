@@ -11,16 +11,32 @@ import { SearchBar } from "..";
 import { GetServerSideProps } from "next";
 type Props = {
 	recipe: Recipe;
-	addi_recipes: Recipe[];
 };
 const RecipePage: FC<Props> = (prop) => {
-	console.log(prop);
 	const router = useRouter();
 	const id = router.query.id;
 	const [recipe, setRecipe] = useState<Recipe | null>(prop.recipe);
-	const [additionalrecipes, setAdditionalrecipes] = useState<Recipe[]>(
-		prop.addi_recipes
-	);
+	const [additionalrecipes, setAdditionalrecipes] = useState<Recipe[]>([]);
+	useEffect(() => {
+		setRecipe(prop.recipe);
+		(async () => {
+			let tmp_array = [];
+			let base_url = "https://internship-recipe-api.ckpd.co/recipes";
+			for (let i = 0; i < recipe.related_recipes.length; i++) {
+				let addires = await fetch(
+					base_url + "/" + recipe.related_recipes[i],
+					{
+						headers: {
+							"X-Api-Key": process.env.NEXT_PUBLIC_APIKEY,
+						},
+					}
+				);
+				let addirecipe_ = (await addires.json()) as Recipe;
+				tmp_array.push(addirecipe_);
+			}
+			setAdditionalrecipes(tmp_array);
+		})();
+	}, [prop]);
 	if (recipe === null) {
 		return <div>Now Loading...</div>;
 	}
@@ -51,8 +67,8 @@ const RecipePage: FC<Props> = (prop) => {
 						{recipe !== null
 							? recipe.steps.map((text) => {
 									return (
-										<div>
-											<li key={text}>{text}</li>
+										<div key={text}>
+											<li>{text}</li>
 											<br />
 										</div>
 									);
@@ -114,20 +130,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
 	});
 	const recipe_ = (await res.json()) as Recipe;
-	let tmp_array = [];
-	for (let i = 0; i < recipe_.related_recipes.length; i++) {
-		let addires = await fetch(base_url + "/" + recipe_.related_recipes[i], {
-			headers: {
-				"X-Api-Key": process.env.NEXT_PUBLIC_APIKEY,
-			},
-		});
-		let addirecipe_ = (await addires.json()) as Recipe;
-		tmp_array.push(addirecipe_);
-	}
 	return {
 		props: {
 			recipe: recipe_,
-			addi_recipes: tmp_array,
 		},
 	};
 };
