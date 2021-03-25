@@ -34,7 +34,7 @@ export type Recipe = {
     // なお、関連レシピの算出アルゴリズムのできが悪いため関連性が低い可能性がある点に注意。
     related_recipes: number[];
 };
-export type Props = {
+export type mainProps = {
   recipes: Recipe[];
   num: number | null;
 }

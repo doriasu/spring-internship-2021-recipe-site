@@ -3,7 +3,7 @@ import {
 	global_bg_color,
 	global_img_bg_color,
 	global_layout,
-	Props,
+	mainProps,
 	Recipe,
 } from "../lib/recipe";
 import Link from "next/link";
@@ -40,27 +40,14 @@ export const SearchBar: FC = () => {
 		</div>
 	);
 };
-const mainPage: FC<Props> = (props) => {
+const mainPage: FC<mainProps> = (props) => {
 	const [recipes, setRecipes] = useState<Recipe[]>(props.recipes);
 	const router = useRouter();
 	const [pagenum, setPagenum] = useState<number>(1);
 	let num: number | null = props.num;
 	useEffect(() => {
 		setPagenum(num ? num : 1);
-		// (async () => {
-		// 	setPagenum(num ? num : 1);
-		// 	const base_url = new URL(
-		// 		"https://internship-recipe-api.ckpd.co/recipes"
-		// 	);
-		// 	if (num && num > 1) {
-		// 		base_url.searchParams.set("page", router.query.num as string);
-		// 	}
-		// 	const res = await fetch(base_url.toString(), {
-		// 		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
-		// 	});
-		// 	const recipes = await res.json();
-		// 	setRecipes(recipes["recipes"] as Recipe[]);
-		// })();
+		setRecipes(props.recipes);
 	}, [num]);
 	return (
 		<div className={global_bg_color}>
@@ -98,12 +85,10 @@ const mainPage: FC<Props> = (props) => {
 						<button
 							onClick={() => {
 								if (pagenum > 1) {
-									// router.push({
-									// 	pathname: "",
-									// 	query: { num: pagenum - 1 },
-									// });
-									window.location.href =
-										"/?num=" + String(pagenum - 1);
+									router.push({
+										pathname: "",
+										query: { num: pagenum - 1 },
+									});
 								}
 							}}
 						>
@@ -114,11 +99,10 @@ const mainPage: FC<Props> = (props) => {
 					)}
 					<button
 						onClick={() => {
-							// router.push({
-							// 	pathname: "",
-							// 	query: { num: pagenum + 1 },
-							// });
-							window.location.href = "/?num=" + String(pagenum+1) 
+							router.push({
+								pathname: "",
+								query: { num: pagenum - 1 },
+							});
 						}}
 					>
 						Next
@@ -143,7 +127,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			recipes: recipes,
-			num:num
+			num: num,
 		},
 	};
 };

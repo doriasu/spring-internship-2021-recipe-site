@@ -8,38 +8,35 @@ import {
 	global_layout,
 } from "../../lib/recipe";
 import { SearchBar } from "..";
-const RecipePage: FC = () => {
+import { GetServerSideProps } from "next";
+type Props = {
+	recipe: Recipe;
+};
+const RecipePage: FC<Props> = (prop) => {
 	const router = useRouter();
 	const id = router.query.id;
-	const [recipe, setRecipe] = useState<Recipe | null>(null);
+	const [recipe, setRecipe] = useState<Recipe | null>(prop.recipe);
 	const [additionalrecipes, setAdditionalrecipes] = useState<Recipe[]>([]);
 	useEffect(() => {
+		setRecipe(prop.recipe);
 		(async () => {
-			if (id) {
-				const id = router.query.id as string;
-				let base_url = "https://internship-recipe-api.ckpd.co/recipes";
-				const res = await fetch(base_url + "/" + id, {
-					headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
-				});
-				const recipe_ = (await res.json()) as Recipe;
-				setRecipe(recipe_);
-				let tmp_array = [];
-				for (let i = 0; i < recipe_.related_recipes.length; i++) {
-					let addires = await fetch(
-						base_url + "/" + recipe_.related_recipes[i],
-						{
-							headers: {
-								"X-Api-Key": process.env.NEXT_PUBLIC_APIKEY,
-							},
-						}
-					);
-					let addirecipe_ = (await addires.json()) as Recipe;
-					tmp_array.push(addirecipe_);
-				}
-				setAdditionalrecipes(tmp_array);
+			let tmp_array = [];
+			let base_url = "https://internship-recipe-api.ckpd.co/recipes";
+			for (let i = 0; i < recipe.related_recipes.length; i++) {
+				let addires = await fetch(
+					base_url + "/" + recipe.related_recipes[i],
+					{
+						headers: {
+							"X-Api-Key": process.env.NEXT_PUBLIC_APIKEY,
+						},
+					}
+				);
+				let addirecipe_ = (await addires.json()) as Recipe;
+				tmp_array.push(addirecipe_);
 			}
+			setAdditionalrecipes(tmp_array);
 		})();
-	}, [id]);
+	}, [prop]);
 	if (recipe === null) {
 		return <div>Now Loading...</div>;
 	}
@@ -70,8 +67,8 @@ const RecipePage: FC = () => {
 						{recipe !== null
 							? recipe.steps.map((text) => {
 									return (
-										<div>
-											<li key={text}>{text}</li>
+										<div key={text}>
+											<li>{text}</li>
 											<br />
 										</div>
 									);
@@ -125,5 +122,18 @@ const RecipePage: FC = () => {
 			</div>
 		</div>
 	);
+};
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const id = Number(context.params?.id);
+	let base_url = "https://internship-recipe-api.ckpd.co/recipes";
+	const res = await fetch(base_url + "/" + id, {
+		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
+	});
+	const recipe_ = (await res.json()) as Recipe;
+	return {
+		props: {
+			recipe: recipe_,
+		},
+	};
 };
 export default RecipePage;
