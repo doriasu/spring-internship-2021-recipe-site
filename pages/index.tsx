@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Recipe } from "../lib/recipe";
+import { global_bg_color, global_img_bg_color, global_layout, Recipe } from "../lib/recipe";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -55,11 +55,12 @@ const mainPage: FC = () => {
 		})();
 	}, [num]);
 	return (
-		<div>
+		<div className={global_bg_color}>
+			<div className={global_layout}>
 			<SearchBar />
 			<br />
 			<h1>新着レシピ</h1>
-			<div className="m-4 grid grid-cols-2 gap-2 font-mono">
+			<div className="grid grid-cols-2 gap-2 font-mono">
 				{recipes
 					? recipes.map((r) => {
 							return r.image_url ? (
@@ -68,7 +69,7 @@ const mainPage: FC = () => {
 									href={"/recipes/" + r.id}
 									passHref
 								>
-									<div className="border border-black rounded-2xl">
+									<div className={global_img_bg_color}>
 										<img
 											className="rounded-2xl"
 											src={r.image_url}
@@ -108,7 +109,8 @@ const mainPage: FC = () => {
 				>
 					Next
 				</button>
-			</div>
+				</div>
+				</div>
 		</div>
 	);
 };

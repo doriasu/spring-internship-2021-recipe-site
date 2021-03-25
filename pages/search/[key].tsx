@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Recipe } from "../../lib/recipe";
+import { global_bg_color, global_img_bg_color, global_layout, Recipe } from "../../lib/recipe";
 import Link from "next/link";
 import { SearchBar } from "..";
 const searchPage: FC = () => {
@@ -34,18 +34,19 @@ const searchPage: FC = () => {
 		})();
 	}, [key, num]);
 	return (
-		<div>
+		<div className={global_bg_color}>
+			<div className={global_layout}>
 			<SearchBar />
 			<br />
 			<h1>
 				<b>{key + "の検索結果"}</b>
 			</h1>
-			<div className="m-4 grid grid-cols-2 gap-2 font-mono">
+			<div className="grid grid-cols-2 gap-2 font-mono">
 				{recipes ? (
 					recipes.map((r) => {
 						return r.image_url ? (
 							<Link key={r.id} href={"/recipes/" + r.id} passHref>
-								<div className="border border-black rounded-2xl">
+								<div className={global_img_bg_color}>
 									<img
 										className="rounded-2xl"
 										src={r.image_url}
@@ -87,7 +88,8 @@ const searchPage: FC = () => {
 				>
 					Next
 				</button>
-			</div>
+				</div>
+				</div>
 		</div>
 	);
 };

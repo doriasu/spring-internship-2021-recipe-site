@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Recipe } from "../../lib/recipe";
+import { Recipe,global_bg_color, global_img_bg_color, global_layout } from "../../lib/recipe";
 import { SearchBar } from "..";
 const RecipePage: FC = () => {
 	const router = useRouter();
@@ -39,7 +39,8 @@ const RecipePage: FC = () => {
 		return <div>Now Loading...</div>;
 	}
 	return (
-		<div>
+		<div className={global_bg_color}>
+			<div className={global_layout}>
 			<SearchBar />
 			<h1>
 				<b>{recipe.title}</b>
@@ -81,7 +82,7 @@ const RecipePage: FC = () => {
 			<h1>
 				<b>関連レシピ</b>
 			</h1>
-			<div className="m-4 grid grid-cols-2 gap-2 font-mono">
+			<div className="grid grid-cols-2 gap-2 font-mono">
 				{additionalrecipes && additionalrecipes.length != 0
 					? additionalrecipes.map((addr) => {
 							return (
@@ -90,7 +91,7 @@ const RecipePage: FC = () => {
 									href={"/recipes/" + addr.id}
 									passHref
 								>
-									<div className="border border-black rounded-2xl">
+									<div className={global_img_bg_color}>
 										<img
 											className="rounded-2xl"
 											key={addr.id}
@@ -102,7 +103,8 @@ const RecipePage: FC = () => {
 							);
 					  })
 					: null}
-			</div>
+				</div>
+				</div>
 		</div>
 	);
 };
