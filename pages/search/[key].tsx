@@ -51,17 +51,24 @@ const searchPage: FC<Props> = (props) => {
 				<div className="grid grid-cols-2 gap-2">
 					{recipes ? (
 						recipes.map((r) => {
-							return r.image_url ? (
+							return r ? (
 								<Link
 									key={r.id}
 									href={"/recipes/" + r.id}
 									passHref
 								>
 									<div className="border border-black rounded-2xl bg-gray-200">
-										<img
-											className="rounded-2xl"
-											src={r.image_url}
-										/>
+										{r.image_url ? (
+											<img
+												className="rounded-2xl"
+												src={r.image_url}
+											/>
+										) : (
+											<img
+												className="rounded-2xl"
+												src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+											/>
+										)}
 										<div>{r.title}</div>
 									</div>
 								</Link>

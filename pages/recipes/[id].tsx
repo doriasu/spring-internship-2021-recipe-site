@@ -47,7 +47,11 @@ const RecipePage: FC<Props> = (prop) => {
 				title={recipe.title}
 				description={recipe.description}
 				keyword="key"
-				image={recipe.image_url}
+				image={
+					recipe.image_url
+						? recipe.image_url
+						: "https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+				}
 				url={router.pathname}
 			/>
 			<div className="ml-4 mr-4">
@@ -62,10 +66,17 @@ const RecipePage: FC<Props> = (prop) => {
 					<div>{recipe.description}</div>
 				</div>
 				<br />
-				<img
-					className="border border-black rounded-2xl"
-					src={recipe.image_url}
-				/>
+				{recipe.image_url ? (
+					<img
+						className="border border-black rounded-2xl"
+						src={recipe.image_url}
+					/>
+				) : (
+					<img
+						className="border border-black rounded-2xl"
+						src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+					/>
+				)}
 				<br />
 				<div className="border border-black rounded-2xl bg-gray-200">
 					<div className="text-center text-xl">
@@ -115,11 +126,19 @@ const RecipePage: FC<Props> = (prop) => {
 										passHref
 									>
 										<div className="border border-black rounded-2xl bg-gray-200">
-											<img
-												className="rounded-2xl"
-												key={addr.id}
-												src={addr.image_url}
-											/>
+											{addr.image_url ? (
+												<img
+													className="rounded-2xl"
+													key={addr.id}
+													src={addr.image_url}
+												/>
+											) : (
+												<img
+													className="rounded-2xl"
+													key={addr.id}
+													src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+												/>
+											)}
 											<div>{addr.title}</div>
 										</div>
 									</Link>
