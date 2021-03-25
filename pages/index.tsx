@@ -43,6 +43,13 @@ export const SearchBar: FC = () => {
 };
 const mainPage: FC<mainProps> = (props) => {
 	const [recipes, setRecipes] = useState<Recipe[]>(props.recipes);
+	let ogp_url: string;
+	for (let i = 0; i < props.recipes.length; i++){
+		if (props.recipes[i].image_url !== null) {
+			ogp_url = props.recipes[i].image_url
+			break
+		}
+	}
 	const router = useRouter();
 	const [pagenum, setPagenum] = useState<number>(props.num);
 	useEffect(() => {
@@ -55,7 +62,7 @@ const mainPage: FC<mainProps> = (props) => {
 				title="cookpad"
 				description="新着レシピ"
 				keyword="key"
-				image={recipes[0].image_url}
+				image={ogp_url}
 				url="https://takuro-spring-internship-2021-recipe-site.vercel.app/"
 			/>
 
