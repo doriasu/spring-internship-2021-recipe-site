@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 export const SearchBar: FC = () => {
 	const [searchtext, setSearchtext] = useState("");
 	const [searchresult, setSearchresult] = useState("");
@@ -121,5 +122,24 @@ const mainPage: FC = () => {
 			</div>
 		</div>
 	);
+};
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const query = context.query.num;
+	let num: number | null = +query;
+	const base_url = new URL("https://internship-recipe-api.ckpd.co/recipes");
+	if (num && num > 1) {
+		base_url.searchParams.set("page", String(num));
+	}
+	const res = await fetch(base_url.toString(), {
+		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
+	});
+	let recipes = await res.json();
+	recipes = recipes as Recipe[];
+
+	return {
+		props: {
+			recipes: recipes,
+		},
+	};
 };
 export default mainPage;
