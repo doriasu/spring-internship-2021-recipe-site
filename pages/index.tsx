@@ -15,13 +15,14 @@ export const SearchBar: FC = () => {
 			<Link href="/" passHref>
 				<div className="container mx-auto h-16">レシピページ</div>
 			</Link>
+			<label htmlFor="search" className="none">search</label>
 			<div className="text-center container　">
-				<label id="mainlabel"></label>
 				<input
 					value={searchtext}
 					onChange={(event) => {
 						setSearchtext(event.target.value);
 					}}
+					id="search"
 					type="search"
 					name="serch"
 					placeholder="Search"
