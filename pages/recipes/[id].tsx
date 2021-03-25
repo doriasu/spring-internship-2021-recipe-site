@@ -47,46 +47,59 @@ const RecipePage: FC = () => {
 		<div className={global_bg_color}>
 			<div className={global_layout}>
 				<SearchBar />
-				<h1>
+				<br />
+				<div className="text-center text-2xl">
 					<b>{recipe.title}</b>
-				</h1>
-				<h1>{recipe.published_at}</h1>
-				<h1>{recipe.author.user_name}</h1>
-				<h1>{recipe.description}</h1>
-				<img src={recipe.image_url} />
-				<h1>
-					<b>調理手順</b>
-				</h1>
-				<ol className="list-decimal list-inside">
-					{recipe !== null
-						? recipe.steps.map((text) => {
-								return (
-									<div>
-										<li key={text}>{text}</li>
-										<br />
-									</div>
-								);
-						  })
-						: null}
-				</ol>
-
-				<h1>
-					<b>材料</b>
-				</h1>
-				<ul className="list-disc list-inside">
-					{recipe !== null
-						? recipe.ingredients.map((text) => {
-								return (
-									<li key={text.name}>
-										{text.name}:{text.quantity}
-									</li>
-								);
-						  })
-						: null}
-				</ul>
-				<h1>
+				</div>
+				<div className="border border-black rounded-2xl bg-gray-200">
+					<div>{recipe.published_at.substr(0,10)}</div>
+					<div>{recipe.author.user_name}</div>
+					<div>{recipe.description}</div>
+				</div>
+				<br />
+				<img
+					className="border border-black rounded-2xl"
+					src={recipe.image_url}
+				/>
+				<br />
+				<div className="border border-black rounded-2xl bg-gray-200">
+					<div className="text-center text-xl">
+						<b>調理手順</b>
+					</div>
+					<ol className="list-decimal list-inside">
+						{recipe !== null
+							? recipe.steps.map((text) => {
+									return (
+										<div>
+											<li key={text}>{text}</li>
+											<br />
+										</div>
+									);
+							  })
+							: null}
+					</ol>
+				</div>
+				<br />
+				<div className="border border-black rounded-2xl bg-gray-200">
+					<div className="text-center text-xl">
+						<b>材料</b>
+					</div>
+					<ul className="list-disc list-inside">
+						{recipe !== null
+							? recipe.ingredients.map((text) => {
+									return (
+										<li key={text.name}>
+											{text.name}:{text.quantity}
+										</li>
+									);
+							  })
+							: null}
+					</ul>
+				</div>
+				<br />
+				<div className="text-center text-xl">
 					<b>関連レシピ</b>
-				</h1>
+				</div>
 				<div className="grid grid-cols-2 gap-2">
 					{additionalrecipes && additionalrecipes.length != 0
 						? additionalrecipes.map((addr) => {
