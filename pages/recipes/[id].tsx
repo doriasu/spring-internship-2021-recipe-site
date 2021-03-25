@@ -10,6 +10,7 @@ import {
 import { SearchBar } from "..";
 import { GetServerSideProps } from "next";
 import Head from "../../components/head";
+import Image from "next/image";
 type Props = {
 	recipe: Recipe;
 };
@@ -67,14 +68,18 @@ const RecipePage: FC<Props> = (prop) => {
 				</div>
 				<br />
 				{recipe.image_url ? (
-					<img
+					<Image
 						className="border border-black rounded-2xl"
 						src={recipe.image_url}
+						width="328"
+						height="186"
 					/>
 				) : (
-					<img
+					<Image
 						className="border border-black rounded-2xl"
 						src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+						width="328"
+						height="186"
 					/>
 				)}
 				<br />
@@ -127,16 +132,20 @@ const RecipePage: FC<Props> = (prop) => {
 									>
 										<div className="border border-black rounded-2xl bg-gray-200">
 											{addr.image_url ? (
-												<img
+												<Image
 													className="rounded-2xl"
 													key={addr.id}
 													src={addr.image_url}
+													width="166"
+													height="93"
 												/>
 											) : (
-												<img
+												<Image
 													className="rounded-2xl"
 													key={addr.id}
 													src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+													width="166"
+													height="93"
 												/>
 											)}
 											<div>{addr.title}</div>

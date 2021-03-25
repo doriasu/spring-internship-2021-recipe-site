@@ -84,14 +84,18 @@ const mainPage: FC<mainProps> = (props) => {
 									>
 										<div className="border border-black rounded-2xl bg-gray-200">
 											{r.image_url ? (
-												<img
+												<Image
 													className="rounded-2xl"
 													src={r.image_url}
+													width="166"
+													height="93"
 												/>
 											) : (
-												<img
+												<Image
 													className="rounded-2xl"
 													src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+													width="166"
+													height="93"
 												/>
 											)}
 											<div>{r.title}</div>
