@@ -126,12 +126,19 @@ const RecipePage: FC<Props> = (prop) => {
 										passHref
 									>
 										<div className="border border-black rounded-2xl bg-gray-200">
-											{addr.image_url?
-											<img
-												className="rounded-2xl"
-												key={addr.id}
-												src={addr.image_url}
-											/>:<img className="rounded-2xl" key={addr.key} src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png" />} 
+											{addr.image_url ? (
+												<img
+													className="rounded-2xl"
+													key={addr.id}
+													src={addr.image_url}
+												/>
+											) : (
+												<img
+													className="rounded-2xl"
+													key={addr.id}
+													src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+												/>
+											)}
 											<div>{addr.title}</div>
 										</div>
 									</Link>
