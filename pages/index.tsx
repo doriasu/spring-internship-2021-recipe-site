@@ -89,7 +89,10 @@ const mainPage: FC<mainProps> = (props) => {
 													src={r.image_url}
 												/>
 											) : (
-												<img className="rounded-2xl" src={""} />
+												<img
+													className="rounded-2xl"
+													src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+												/>
 											)}
 											<div>{r.title}</div>
 										</div>
@@ -143,11 +146,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	});
 	let recipes = await res.json();
 	recipes = recipes.recipes as Recipe[];
-	recipes.map(e => {
-		if (!e.image_url) {
-			console.log(e)
-		}
-	})
 	return {
 		props: {
 			recipes: recipes,
