@@ -15,7 +15,9 @@ export const SearchBar: FC = () => {
 			<Link href="/" passHref>
 				<div className="container mx-auto h-16">レシピページ</div>
 			</Link>
-			<label htmlFor="search" className="none">search</label>
+			<label htmlFor="search" className="sr-only">
+				search
+			</label>
 			<div className="text-center container　">
 				<input
 					value={searchtext}
