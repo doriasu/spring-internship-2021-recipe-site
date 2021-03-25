@@ -47,7 +47,7 @@ const mainPage: FC<Props> = (props) => {
 	let num: number | null = props.num;
 	useEffect(() => {
 		setPagenum(num ? num : 1);
-		setRecipes(props.recipes)
+		setRecipes(props.recipes);
 	}, [num]);
 	return (
 		<div className={global_bg_color}>
@@ -89,7 +89,6 @@ const mainPage: FC<Props> = (props) => {
 										pathname: "",
 										query: { num: pagenum - 1 },
 									});
-								
 								}
 							}}
 						>
@@ -128,7 +127,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			recipes: recipes,
-			num:num
+			num: num,
 		},
 	};
 };
