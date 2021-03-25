@@ -1,8 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import {
-	mainProps,
-	Recipe,
-} from "../lib/recipe";
+import { mainProps, Recipe } from "../lib/recipe";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -19,6 +16,7 @@ export const SearchBar: FC = () => {
 				<div className="container mx-auto h-16">レシピページ</div>
 			</Link>
 			<div className="text-center container　">
+				<label id="mainlabel"></label>
 				<input
 					value={searchtext}
 					onChange={(event) => {
@@ -86,6 +84,7 @@ const mainPage: FC<mainProps> = (props) => {
 													src={r.image_url}
 													width="166"
 													height="93"
+													alt={r.title}
 												/>
 											) : (
 												<Image
@@ -93,6 +92,7 @@ const mainPage: FC<mainProps> = (props) => {
 													src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
 													width="166"
 													height="93"
+													alt={r.title}
 												/>
 											)}
 											<div>{r.title}</div>

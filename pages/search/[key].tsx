@@ -1,8 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import {
-	Recipe,
-} from "../../lib/recipe";
+import { Recipe } from "../../lib/recipe";
 import Link from "next/link";
 import { SearchBar } from "..";
 import { GetServerSideProps } from "next";
@@ -62,6 +60,7 @@ const searchPage: FC<Props> = (props) => {
 												src={r.image_url}
 												width="166"
 												height="93"
+												alt={r.title}
 											/>
 										) : (
 											<Image
@@ -69,6 +68,7 @@ const searchPage: FC<Props> = (props) => {
 												src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
 												width="166"
 												height="93"
+												alt={r.title}
 											/>
 										)}
 										<div>{r.title}</div>
