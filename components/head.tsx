@@ -30,7 +30,8 @@ export default ({
 			<meta name="twitter:title" content={title} />
 			<meta name="twitter:description" content={description} />
 			<meta name="twitter:image" content={image} />
-			<link rel="canonical" href={url} />
+      <link rel="canonical" href={url} />
+      <meta name="Description" content="recipe page" />
 		</Head>
 	);
 };
