@@ -64,7 +64,9 @@ const mainPage: FC = () => {
 			<div className={global_layout}>
 				<SearchBar />
 				<br />
-				<div className="text-2xl"><b>新着レシピ</b></div>
+				<div className="text-2xl">
+					<b>新着レシピ</b>
+				</div>
 				<br />
 				<div className="grid grid-cols-2 gap-2">
 					{recipes
