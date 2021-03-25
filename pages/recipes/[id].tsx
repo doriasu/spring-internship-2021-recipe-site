@@ -42,6 +42,7 @@ const RecipePage: FC<Props> = (prop) => {
 	}
 	return (
 		<div className="bg-red-50 font-mono">
+			
 			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />

@@ -50,6 +50,16 @@ const mainPage: FC<mainProps> = (props) => {
 	}, [props]);
 	return (
 		<div className="bg-red-50 font-mono">
+			<meta property="og:title" content="Recipe Servoce" />
+			<meta property="og:type" content="website" />
+			<meta
+				property="og:url"
+				content="https://takuro-spring-internship-2021-recipe-site.vercel.app/"
+			/>
+			<meta
+				property="og:image"
+				content={props.recipes[0].image_url}
+			/>
 			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />
