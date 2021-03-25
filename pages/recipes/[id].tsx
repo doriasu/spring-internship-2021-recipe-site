@@ -9,6 +9,7 @@ import {
 } from "../../lib/recipe";
 import { SearchBar } from "..";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 type Props = {
 	recipe: Recipe;
 };
@@ -42,7 +43,6 @@ const RecipePage: FC<Props> = (prop) => {
 	}
 	return (
 		<div className="bg-red-50 font-mono">
-			
 			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />
