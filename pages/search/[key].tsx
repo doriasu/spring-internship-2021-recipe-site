@@ -35,7 +35,9 @@ const searchPage: FC<Props> = (props) => {
 				description={key + "の検索結果"}
 				keyword="key"
 				image={ogp_url}
-				url={router.pathname}
+				url={
+					"https://takuro-spring-internship-2021-recipe-site.vercel.app/search/"+key
+				}
 			/>
 			<div className="ml-4 mr-4">
 				<SearchBar />
@@ -129,7 +131,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			recipes: recipes,
-			num: num,
+			num: num
 		},
 	};
 };
