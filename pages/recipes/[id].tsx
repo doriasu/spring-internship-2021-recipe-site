@@ -81,7 +81,7 @@ const RecipePage: FC = () => {
 			<h1>
 				<b>関連レシピ</b>
 			</h1>
-			<div className="grid grid-cols-2">
+			<div className="m-4 grid grid-cols-2 gap-2 font-mono">
 				{additionalrecipes && additionalrecipes.length != 0
 					? additionalrecipes.map((addr) => {
 							return (
@@ -90,7 +90,14 @@ const RecipePage: FC = () => {
 									href={"/recipes/" + addr.id}
 									passHref
 								>
-									<img key={addr.id} src={addr.image_url} />
+									<div className="border border-black rounded-2xl">
+										<img
+											className="rounded-2xl"
+											key={addr.id}
+											src={addr.image_url}
+										/>
+										<div>{addr.title}</div>
+									</div>
 								</Link>
 							);
 					  })

@@ -59,7 +59,7 @@ const mainPage: FC = () => {
 			<SearchBar />
 			<br />
 			<h1>新着レシピ</h1>
-			<div className="grid grid-cols-2">
+			<div className="m-4 grid grid-cols-2 gap-2 font-mono">
 				{recipes
 					? recipes.map((r) => {
 							return r.image_url ? (
@@ -68,8 +68,11 @@ const mainPage: FC = () => {
 									href={"/recipes/" + r.id}
 									passHref
 								>
-									<div>
-										<img src={r.image_url} />
+									<div className="border border-black rounded-2xl">
+										<img
+											className="rounded-2xl"
+											src={r.image_url}
+										/>
 										<div>{r.title}</div>
 									</div>
 								</Link>

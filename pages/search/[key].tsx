@@ -40,23 +40,24 @@ const searchPage: FC = () => {
 			<h1>
 				<b>{key + "の検索結果"}</b>
 			</h1>
-			<div className="grid grid-cols-2">
-				{recipes
-					? recipes.map((r) => {
-							return r.image_url ? (
-								<Link
-									key={r.id}
-									href={"/recipes/" + r.id}
-									passHref
-								>
-									<div>
-										<img src={r.image_url} />
-										<div>{r.title}</div>
-									</div>
-								</Link>
-							) : null;
-					  })
-					: null}
+			<div className="m-4 grid grid-cols-2 gap-2 font-mono">
+				{recipes ? (
+					recipes.map((r) => {
+						return r.image_url ? (
+							<Link key={r.id} href={"/recipes/" + r.id} passHref>
+								<div className="border border-black rounded-2xl">
+									<img
+										className="rounded-2xl"
+										src={r.image_url}
+									/>
+									<div>{r.title}</div>
+								</div>
+							</Link>
+						) : null;
+					})
+				) : (
+					<div>No recipes founded.</div>
+				)}
 			</div>
 			<br />
 			<div className="grid grid-cols-2">
