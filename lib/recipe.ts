@@ -34,6 +34,10 @@ export type Recipe = {
     // なお、関連レシピの算出アルゴリズムのできが悪いため関連性が低い可能性がある点に注意。
     related_recipes: number[];
 };
+export type Props = {
+  recipes: Recipe[];
+  num: number | null;
+}
 export const global_bg_color = "bg-red-50 font-mono"
 export const global_img_bg_color = "border border-black rounded-2xl bg-gray-200"
 export const global_layout = "ml-4 mr-4"
