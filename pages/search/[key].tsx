@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import { SearchBar } from "..";
 import { GetServerSideProps } from "next";
+import Head from "../../components/head";
 type Props = {
 	recipes: Recipe[];
 	num: number | null;
@@ -24,8 +25,22 @@ const searchPage: FC<Props> = (props) => {
 		setRecipes(props.recipes);
 		setPagenum(num ? num : 1);
 	}, [key, num]);
+	let ogp_url: string;
+	for (let i = 0; i < props.recipes.length; i++) {
+		if (props.recipes[i].image_url !== null) {
+			ogp_url = props.recipes[i].image_url;
+			break;
+		}
+	}
 	return (
 		<div className="bg-red-50 font-mono">
+			<Head
+				title="recipe research"
+				description={key + "の検索結果"}
+				keyword="key"
+				image={ogp_url}
+				url={router.pathname}
+			/>
 			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />

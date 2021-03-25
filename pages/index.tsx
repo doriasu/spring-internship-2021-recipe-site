@@ -10,7 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-import Head from '../components/head'
+import Head from "../components/head";
 export const SearchBar: FC = () => {
 	const [searchtext, setSearchtext] = useState("");
 	const [searchresult, setSearchresult] = useState("");
@@ -44,10 +44,10 @@ export const SearchBar: FC = () => {
 const mainPage: FC<mainProps> = (props) => {
 	const [recipes, setRecipes] = useState<Recipe[]>(props.recipes);
 	let ogp_url: string;
-	for (let i = 0; i < props.recipes.length; i++){
+	for (let i = 0; i < props.recipes.length; i++) {
 		if (props.recipes[i].image_url !== null) {
-			ogp_url = props.recipes[i].image_url
-			break
+			ogp_url = props.recipes[i].image_url;
+			break;
 		}
 	}
 	const router = useRouter();
@@ -59,7 +59,7 @@ const mainPage: FC<mainProps> = (props) => {
 	return (
 		<div className="bg-red-50 font-mono">
 			<Head
-				title="cookpad"
+				title="recipe page"
 				description="新着レシピ"
 				keyword="key"
 				image={ogp_url}
