@@ -41,8 +41,8 @@ const RecipePage: FC<Props> = (prop) => {
 		return <div>Now Loading...</div>;
 	}
 	return (
-		<div className={global_bg_color}>
-			<div className={global_layout}>
+		<div className="bg-red-50 font-mono">
+			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />
 				<div className="text-center text-2xl">
@@ -106,7 +106,7 @@ const RecipePage: FC<Props> = (prop) => {
 										href={"/recipes/" + addr.id}
 										passHref
 									>
-										<div className={global_img_bg_color}>
+										<div className="border border-black rounded-2xl bg-gray-200">
 											<img
 												className="rounded-2xl"
 												key={addr.id}
