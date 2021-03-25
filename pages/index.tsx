@@ -3,6 +3,7 @@ import {
 	global_bg_color,
 	global_img_bg_color,
 	global_layout,
+	Props,
 	Recipe,
 } from "../lib/recipe";
 import Link from "next/link";
@@ -39,26 +40,27 @@ export const SearchBar: FC = () => {
 		</div>
 	);
 };
-const mainPage: FC = () => {
-	const [recipes, setRecipes] = useState<Recipe[]>([]);
+const mainPage: FC<Props> = (props) => {
+	const [recipes, setRecipes] = useState<Recipe[]>(props.recipes);
 	const router = useRouter();
 	const [pagenum, setPagenum] = useState<number>(1);
-	let num: number | null = +router.query.num;
+	let num: number | null = props.num;
 	useEffect(() => {
-		(async () => {
-			setPagenum(num ? num : 1);
-			const base_url = new URL(
-				"https://internship-recipe-api.ckpd.co/recipes"
-			);
-			if (num && num > 1) {
-				base_url.searchParams.set("page", router.query.num as string);
-			}
-			const res = await fetch(base_url.toString(), {
-				headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
-			});
-			const recipes = await res.json();
-			setRecipes(recipes["recipes"] as Recipe[]);
-		})();
+		setPagenum(num ? num : 1);
+		// (async () => {
+		// 	setPagenum(num ? num : 1);
+		// 	const base_url = new URL(
+		// 		"https://internship-recipe-api.ckpd.co/recipes"
+		// 	);
+		// 	if (num && num > 1) {
+		// 		base_url.searchParams.set("page", router.query.num as string);
+		// 	}
+		// 	const res = await fetch(base_url.toString(), {
+		// 		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
+		// 	});
+		// 	const recipes = await res.json();
+		// 	setRecipes(recipes["recipes"] as Recipe[]);
+		// })();
 	}, [num]);
 	return (
 		<div className={global_bg_color}>
@@ -96,10 +98,12 @@ const mainPage: FC = () => {
 						<button
 							onClick={() => {
 								if (pagenum > 1) {
-									router.push({
-										pathname: "",
-										query: { num: pagenum - 1 },
-									});
+									// router.push({
+									// 	pathname: "",
+									// 	query: { num: pagenum - 1 },
+									// });
+									window.location.href =
+										"/?num=" + String(pagenum - 1);
 								}
 							}}
 						>
@@ -110,10 +114,11 @@ const mainPage: FC = () => {
 					)}
 					<button
 						onClick={() => {
-							router.push({
-								pathname: "",
-								query: { num: pagenum + 1 },
-							});
+							// router.push({
+							// 	pathname: "",
+							// 	query: { num: pagenum + 1 },
+							// });
+							window.location.href = "/?num=" + String(pagenum+1) 
 						}}
 					>
 						Next
@@ -134,11 +139,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
 	});
 	let recipes = await res.json();
-	recipes = recipes as Recipe[];
-
+	recipes = recipes.recipes as Recipe[];
 	return {
 		props: {
 			recipes: recipes,
+			num:num
 		},
 	};
 };
