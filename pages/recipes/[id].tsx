@@ -87,7 +87,7 @@ const RecipePage: FC = () => {
 				<h1>
 					<b>関連レシピ</b>
 				</h1>
-				<div className="grid grid-cols-2 gap-2 font-mono">
+				<div className="grid grid-cols-2 gap-2">
 					{additionalrecipes && additionalrecipes.length != 0
 						? additionalrecipes.map((addr) => {
 								return (

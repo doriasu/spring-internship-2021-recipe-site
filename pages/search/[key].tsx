@@ -43,10 +43,11 @@ const searchPage: FC = () => {
 			<div className={global_layout}>
 				<SearchBar />
 				<br />
-				<h1>
+				<div className="text-2xl">
 					<b>{key + "の検索結果"}</b>
-				</h1>
-				<div className="grid grid-cols-2 gap-2 font-mono">
+				</div>
+				<br />
+				<div className="grid grid-cols-2 gap-2">
 					{recipes ? (
 						recipes.map((r) => {
 							return r.image_url ? (

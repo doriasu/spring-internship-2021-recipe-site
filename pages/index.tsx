@@ -64,8 +64,9 @@ const mainPage: FC = () => {
 			<div className={global_layout}>
 				<SearchBar />
 				<br />
-				<h1>新着レシピ</h1>
-				<div className="grid grid-cols-2 gap-2 font-mono">
+				<div className="text-2xl"><b>新着レシピ</b></div>
+				<br />
+				<div className="grid grid-cols-2 gap-2">
 					{recipes
 						? recipes.map((r) => {
 								return r.image_url ? (
