@@ -49,7 +49,10 @@ const searchPage: FC = () => {
 									href={"/recipes/" + r.id}
 									passHref
 								>
-									<img src={r.image_url} />
+									<div>
+										<img src={r.image_url} />
+										<div>{r.title}</div>
+									</div>
 								</Link>
 							) : null;
 					  })
