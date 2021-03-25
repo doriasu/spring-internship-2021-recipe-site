@@ -76,17 +76,21 @@ const mainPage: FC<mainProps> = (props) => {
 				<div className="grid grid-cols-2 gap-2">
 					{recipes
 						? recipes.map((r) => {
-								return r.image_url ? (
+								return r ? (
 									<Link
 										key={r.id}
 										href={"/recipes/" + r.id}
 										passHref
 									>
 										<div className="border border-black rounded-2xl bg-gray-200">
-											<img
-												className="rounded-2xl"
-												src={r.image_url}
-											/>
+											{r.image_url ? (
+												<img
+													className="rounded-2xl"
+													src={r.image_url}
+												/>
+											) : (
+												<img className="rounded-2xl" src={""} />
+											)}
 											<div>{r.title}</div>
 										</div>
 									</Link>
@@ -139,6 +143,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	});
 	let recipes = await res.json();
 	recipes = recipes.recipes as Recipe[];
+	recipes.map(e => {
+		if (!e.image_url) {
+			console.log(e)
+		}
+	})
 	return {
 		props: {
 			recipes: recipes,
