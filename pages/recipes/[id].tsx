@@ -1,9 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import {
-	Recipe,
-} from "../../lib/recipe";
+import { Recipe } from "../../lib/recipe";
 import { SearchBar } from "..";
 import { GetServerSideProps } from "next";
 import Head from "../../components/head";
@@ -70,6 +68,7 @@ const RecipePage: FC<Props> = (prop) => {
 						src={recipe.image_url}
 						width="328"
 						height="186"
+						alt={recipe.title}
 					/>
 				) : (
 					<Image
@@ -77,6 +76,7 @@ const RecipePage: FC<Props> = (prop) => {
 						src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
 						width="328"
 						height="186"
+						alt={recipe.title}
 					/>
 				)}
 				<br />
@@ -135,6 +135,7 @@ const RecipePage: FC<Props> = (prop) => {
 													src={addr.image_url}
 													width="166"
 													height="93"
+													alt={addr.title}
 												/>
 											) : (
 												<Image
@@ -143,6 +144,7 @@ const RecipePage: FC<Props> = (prop) => {
 													src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
 													width="166"
 													height="93"
+													alt={addr.title}
 												/>
 											)}
 											<div>{addr.title}</div>
