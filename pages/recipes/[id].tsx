@@ -52,7 +52,7 @@ const RecipePage: FC = () => {
 					<b>{recipe.title}</b>
 				</div>
 				<div className="border border-black rounded-2xl bg-gray-200">
-					<div>{recipe.published_at.substr(0,10)}</div>
+					<div>{recipe.published_at.substr(0, 10)}</div>
 					<div>{recipe.author.user_name}</div>
 					<div>{recipe.description}</div>
 				</div>
