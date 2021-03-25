@@ -8,35 +8,21 @@ import {
 } from "../../lib/recipe";
 import Link from "next/link";
 import { SearchBar } from "..";
-const searchPage: FC = () => {
+import { GetServerSideProps } from "next";
+type Props = {
+	recipes: Recipe[];
+	num: number | null;
+};
+const searchPage: FC<Props> = (props) => {
 	const [searchtext, setSearchtext] = useState("");
 	const router = useRouter();
-	const [recipes, setRecipes] = useState<Recipe[]>([]);
-	const [pagenum, setPagenum] = useState<number>(1);
+	const [recipes, setRecipes] = useState<Recipe[]>(props.recipes);
+	const [pagenum, setPagenum] = useState<number>(props.num);
 	let key = router.query.key as string;
 	let num: number = +router.query.num;
 	useEffect(() => {
-		(async () => {
-			if (key) {
-				key = key as string;
-				setPagenum(num ? num : 1);
-				const base_url = new URL(
-					"https://internship-recipe-api.ckpd.co/search"
-				);
-				base_url.searchParams.set("keyword", key);
-				if (num && num > 1) {
-					base_url.searchParams.set(
-						"page",
-						router.query.num as string
-					);
-				}
-				const res = await fetch(base_url.toString(), {
-					headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
-				});
-				const recipes = await res.json();
-				setRecipes(recipes["recipes"] as Recipe[]);
-			}
-		})();
+		setRecipes(props.recipes);
+		setPagenum(num ? num : 1);
 	}, [key, num]);
 	return (
 		<div className={global_bg_color}>
@@ -102,5 +88,25 @@ const searchPage: FC = () => {
 			</div>
 		</div>
 	);
+};
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const key = String(context.params?.key);
+	const num = Number(context.query.num);
+	const base_url = new URL("https://internship-recipe-api.ckpd.co/search");
+	base_url.searchParams.set("keyword", key);
+	if (num && num > 1) {
+		base_url.searchParams.set("page", String(num));
+	}
+	const res = await fetch(base_url.toString(), {
+		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
+	});
+	let recipes = await res.json();
+	recipes = recipes.recipes as Recipe[];
+	return {
+		props: {
+			recipes: recipes,
+			num: num,
+		},
+	};
 };
 export default searchPage;

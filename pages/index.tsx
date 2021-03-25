@@ -3,7 +3,7 @@ import {
 	global_bg_color,
 	global_img_bg_color,
 	global_layout,
-	Props,
+	mainProps,
 	Recipe,
 } from "../lib/recipe";
 import Link from "next/link";
@@ -40,7 +40,7 @@ export const SearchBar: FC = () => {
 		</div>
 	);
 };
-const mainPage: FC<Props> = (props) => {
+const mainPage: FC<mainProps> = (props) => {
 	const [recipes, setRecipes] = useState<Recipe[]>(props.recipes);
 	const router = useRouter();
 	const [pagenum, setPagenum] = useState<number>(1);

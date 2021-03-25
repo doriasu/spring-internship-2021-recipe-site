@@ -8,38 +8,19 @@ import {
 	global_layout,
 } from "../../lib/recipe";
 import { SearchBar } from "..";
-const RecipePage: FC = () => {
+import { GetServerSideProps } from "next";
+type Props = {
+	recipe: Recipe;
+	addi_recipes: Recipe[];
+};
+const RecipePage: FC<Props> = (prop) => {
+	console.log(prop);
 	const router = useRouter();
 	const id = router.query.id;
-	const [recipe, setRecipe] = useState<Recipe | null>(null);
-	const [additionalrecipes, setAdditionalrecipes] = useState<Recipe[]>([]);
-	useEffect(() => {
-		(async () => {
-			if (id) {
-				const id = router.query.id as string;
-				let base_url = "https://internship-recipe-api.ckpd.co/recipes";
-				const res = await fetch(base_url + "/" + id, {
-					headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
-				});
-				const recipe_ = (await res.json()) as Recipe;
-				setRecipe(recipe_);
-				let tmp_array = [];
-				for (let i = 0; i < recipe_.related_recipes.length; i++) {
-					let addires = await fetch(
-						base_url + "/" + recipe_.related_recipes[i],
-						{
-							headers: {
-								"X-Api-Key": process.env.NEXT_PUBLIC_APIKEY,
-							},
-						}
-					);
-					let addirecipe_ = (await addires.json()) as Recipe;
-					tmp_array.push(addirecipe_);
-				}
-				setAdditionalrecipes(tmp_array);
-			}
-		})();
-	}, [id]);
+	const [recipe, setRecipe] = useState<Recipe | null>(prop.recipe);
+	const [additionalrecipes, setAdditionalrecipes] = useState<Recipe[]>(
+		prop.addi_recipes
+	);
 	if (recipe === null) {
 		return <div>Now Loading...</div>;
 	}
@@ -125,5 +106,29 @@ const RecipePage: FC = () => {
 			</div>
 		</div>
 	);
+};
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const id = Number(context.params?.id);
+	let base_url = "https://internship-recipe-api.ckpd.co/recipes";
+	const res = await fetch(base_url + "/" + id, {
+		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
+	});
+	const recipe_ = (await res.json()) as Recipe;
+	let tmp_array = [];
+	for (let i = 0; i < recipe_.related_recipes.length; i++) {
+		let addires = await fetch(base_url + "/" + recipe_.related_recipes[i], {
+			headers: {
+				"X-Api-Key": process.env.NEXT_PUBLIC_APIKEY,
+			},
+		});
+		let addirecipe_ = (await addires.json()) as Recipe;
+		tmp_array.push(addirecipe_);
+	}
+	return {
+		props: {
+			recipe: recipe_,
+			addi_recipes: tmp_array,
+		},
+	};
 };
 export default RecipePage;
