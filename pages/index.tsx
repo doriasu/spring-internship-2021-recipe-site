@@ -1,8 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import {
-	global_bg_color,
-	global_img_bg_color,
-	global_layout,
 	mainProps,
 	Recipe,
 } from "../lib/recipe";

@@ -3,9 +3,6 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import {
 	Recipe,
-	global_bg_color,
-	global_img_bg_color,
-	global_layout,
 } from "../../lib/recipe";
 import { SearchBar } from "..";
 import { GetServerSideProps } from "next";
