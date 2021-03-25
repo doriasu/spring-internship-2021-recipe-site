@@ -1,7 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Recipe,global_bg_color, global_img_bg_color, global_layout } from "../../lib/recipe";
+import {
+	Recipe,
+	global_bg_color,
+	global_img_bg_color,
+	global_layout,
+} from "../../lib/recipe";
 import { SearchBar } from "..";
 const RecipePage: FC = () => {
 	const router = useRouter();
@@ -41,70 +46,70 @@ const RecipePage: FC = () => {
 	return (
 		<div className={global_bg_color}>
 			<div className={global_layout}>
-			<SearchBar />
-			<h1>
-				<b>{recipe.title}</b>
-			</h1>
-			<h1>{recipe.published_at}</h1>
-			<h1>{recipe.author.user_name}</h1>
-			<h1>{recipe.description}</h1>
-			<img src={recipe.image_url} />
-			<h1>
-				<b>調理手順</b>
-			</h1>
-			<ol className="list-decimal list-inside">
-				{recipe !== null
-					? recipe.steps.map((text) => {
-							return (
-								<div>
-									<li key={text}>{text}</li>
-									<br />
-								</div>
-							);
-					  })
-					: null}
-			</ol>
-
-			<h1>
-				<b>材料</b>
-			</h1>
-			<ul className="list-disc list-inside">
-				{recipe !== null
-					? recipe.ingredients.map((text) => {
-							return (
-								<li key={text.name}>
-									{text.name}:{text.quantity}
-								</li>
-							);
-					  })
-					: null}
-			</ul>
-			<h1>
-				<b>関連レシピ</b>
-			</h1>
-			<div className="grid grid-cols-2 gap-2 font-mono">
-				{additionalrecipes && additionalrecipes.length != 0
-					? additionalrecipes.map((addr) => {
-							return (
-								<Link
-									key={addr.id}
-									href={"/recipes/" + addr.id}
-									passHref
-								>
-									<div className={global_img_bg_color}>
-										<img
-											className="rounded-2xl"
-											key={addr.id}
-											src={addr.image_url}
-										/>
-										<div>{addr.title}</div>
+				<SearchBar />
+				<h1>
+					<b>{recipe.title}</b>
+				</h1>
+				<h1>{recipe.published_at}</h1>
+				<h1>{recipe.author.user_name}</h1>
+				<h1>{recipe.description}</h1>
+				<img src={recipe.image_url} />
+				<h1>
+					<b>調理手順</b>
+				</h1>
+				<ol className="list-decimal list-inside">
+					{recipe !== null
+						? recipe.steps.map((text) => {
+								return (
+									<div>
+										<li key={text}>{text}</li>
+										<br />
 									</div>
-								</Link>
-							);
-					  })
-					: null}
+								);
+						  })
+						: null}
+				</ol>
+
+				<h1>
+					<b>材料</b>
+				</h1>
+				<ul className="list-disc list-inside">
+					{recipe !== null
+						? recipe.ingredients.map((text) => {
+								return (
+									<li key={text.name}>
+										{text.name}:{text.quantity}
+									</li>
+								);
+						  })
+						: null}
+				</ul>
+				<h1>
+					<b>関連レシピ</b>
+				</h1>
+				<div className="grid grid-cols-2 gap-2 font-mono">
+					{additionalrecipes && additionalrecipes.length != 0
+						? additionalrecipes.map((addr) => {
+								return (
+									<Link
+										key={addr.id}
+										href={"/recipes/" + addr.id}
+										passHref
+									>
+										<div className={global_img_bg_color}>
+											<img
+												className="rounded-2xl"
+												key={addr.id}
+												src={addr.image_url}
+											/>
+											<div>{addr.title}</div>
+										</div>
+									</Link>
+								);
+						  })
+						: null}
 				</div>
-				</div>
+			</div>
 		</div>
 	);
 };
