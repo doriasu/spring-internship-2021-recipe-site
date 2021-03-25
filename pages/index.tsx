@@ -43,12 +43,11 @@ export const SearchBar: FC = () => {
 const mainPage: FC<mainProps> = (props) => {
 	const [recipes, setRecipes] = useState<Recipe[]>(props.recipes);
 	const router = useRouter();
-	const [pagenum, setPagenum] = useState<number>(1);
-	let num: number | null = props.num;
+	const [pagenum, setPagenum] = useState<number>(props.num);
 	useEffect(() => {
-		setPagenum(num ? num : 1);
+		setPagenum(props.num ? props.num : 1);
 		setRecipes(props.recipes);
-	}, [num]);
+	}, [props]);
 	return (
 		<div className={global_bg_color}>
 			<div className={global_layout}>
@@ -101,7 +100,7 @@ const mainPage: FC<mainProps> = (props) => {
 						onClick={() => {
 							router.push({
 								pathname: "",
-								query: { num: pagenum - 1 },
+								query: { num: pagenum + 1 },
 							});
 						}}
 					>
@@ -127,7 +126,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			recipes: recipes,
-			num: num,
+			num: num?num:1,
 		},
 	};
 };
