@@ -98,7 +98,7 @@ const mainPage: FC<mainProps> = (props) => {
 													alt={r.title}
 												/>
 											)}
-											<div>{r.title}</div>
+											<div className="text-center">{r.title}</div>
 										</div>
 									</Link>
 								) : null;

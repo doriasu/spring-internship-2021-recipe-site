@@ -73,7 +73,7 @@ const searchPage: FC<Props> = (props) => {
 												alt={r.title}
 											/>
 										)}
-										<div>{r.title}</div>
+										<div className="text-center">{r.title}</div>
 									</div>
 								</Link>
 							) : null;
