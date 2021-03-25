@@ -1,9 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
-	global_bg_color,
-	global_img_bg_color,
-	global_layout,
 	Recipe,
 } from "../../lib/recipe";
 import Link from "next/link";
