@@ -37,24 +37,19 @@ const mainPage: FC = () => {
 	const [recipes, setRecipes] = useState<Recipe[]>([]);
 	const router = useRouter();
 	const [pagenum, setPagenum] = useState<number>(1);
-	let num: number|null = +router.query.num;
+	let num: number | null = +router.query.num;
 	useEffect(() => {
 		(async () => {
 			setPagenum(num ? num : 1);
 			const base_url = new URL(
 				"https://internship-recipe-api.ckpd.co/recipes"
 			);
-			if (
-				num&&num>1
-			) {
+			if (num && num > 1) {
 				base_url.searchParams.set("page", router.query.num as string);
 			}
-			const res = await fetch(
-				base_url.toString(),
-				{
-					headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
-				}
-			);
+			const res = await fetch(base_url.toString(), {
+				headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
+			});
 			const recipes = await res.json();
 			setRecipes(recipes["recipes"] as Recipe[]);
 		})();
