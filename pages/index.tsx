@@ -14,7 +14,7 @@ export const SearchBar: FC = () => {
 	return (
 		<div>
 			<Link href="/" passHref>
-				<div className="container mx-auto h-16">レシピページ</div>
+				<div className="container mx-auto h-16 text-center text-3xl text-san mt-8 ">Recipe Search</div>
 			</Link>
 			<label htmlFor="search" className="sr-only">
 				search
