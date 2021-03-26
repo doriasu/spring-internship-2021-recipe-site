@@ -49,7 +49,10 @@ const RecipePage: FC<Props> = (prop) => {
 						? recipe.image_url
 						: "https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
 				}
-				url={"https://takuro-spring-internship-2021-recipe-site.vercel.app/recipes/"+String(prop.id)}
+				url={
+					"https://takuro-spring-internship-2021-recipe-site.vercel.app/recipes/" +
+					String(prop.id)
+				}
 			/>
 			<div className="ml-4 mr-4">
 				<SearchBar />
@@ -58,8 +61,9 @@ const RecipePage: FC<Props> = (prop) => {
 					<b>{recipe.title}</b>
 				</div>
 				<div className="border border-black rounded-2xl bg-gray-200">
-					<div>{recipe.published_at.substr(0, 10)}</div>
-					<div>{recipe.author.user_name}</div>
+					<div className="text-center text-xl">
+						<b>詳細</b>
+					</div>
 					<div>{recipe.description}</div>
 				</div>
 				<br />
@@ -80,6 +84,12 @@ const RecipePage: FC<Props> = (prop) => {
 						alt={recipe.title}
 					/>
 				)}
+				<div className="grid grid-cols-2 gap-2">
+					<div className="text-center">{recipe.author.user_name}</div>
+					<div className="text-center">
+						{recipe.published_at.substr(0, 10)}
+					</div>
+				</div>
 				<br />
 				<div className="border border-black rounded-2xl bg-gray-200">
 					<div className="text-center text-xl">
@@ -88,12 +98,7 @@ const RecipePage: FC<Props> = (prop) => {
 					<ol className="list-decimal list-inside">
 						{recipe !== null
 							? recipe.steps.map((text) => {
-									return (
-										<div key={text}>
-											<li>{text}</li>
-											<br />
-										</div>
-									);
+									return <li>{text}</li>;
 							  })
 							: null}
 					</ol>
@@ -103,12 +108,14 @@ const RecipePage: FC<Props> = (prop) => {
 					<div className="text-center text-xl">
 						<b>材料</b>
 					</div>
-					<ul className="list-disc list-inside">
+					<ul className="list-none list-inside">
 						{recipe !== null
 							? recipe.ingredients.map((text) => {
 									return (
 										<li key={text.name}>
-											{text.name}:{text.quantity}
+											<p>
+												{text.name}:{text.quantity}
+											</p>
 										</li>
 									);
 							  })
@@ -148,7 +155,9 @@ const RecipePage: FC<Props> = (prop) => {
 													alt={addr.title}
 												/>
 											)}
-											<div>{addr.title}</div>
+											<div className="text-center">
+												{addr.title}
+											</div>
 										</div>
 									</Link>
 								);
@@ -169,7 +178,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			recipe: recipe_,
-			id:id
+			id: id,
 		},
 	};
 };
