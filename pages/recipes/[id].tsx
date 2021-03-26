@@ -61,10 +61,10 @@ const RecipePage: FC<Props> = (prop) => {
 					<b>{recipe.title}</b>
 				</div>
 				<div className="border border-black rounded-2xl bg-gray-200">
-					<div className="text-center text-xl">
+					<div className="text-center text-xl m-2">
 						<b>詳細</b>
 					</div>
-					<div>{recipe.description}</div>
+					<div className="m-2">{recipe.description}</div>
 				</div>
 				<br />
 				{recipe.image_url ? (
@@ -92,38 +92,82 @@ const RecipePage: FC<Props> = (prop) => {
 				</div>
 				<br />
 				<div className="border border-black rounded-2xl bg-gray-200">
-					<div className="text-center text-xl">
+					<div className="text-center text-xl m-2">
 						<b>調理手順</b>
 					</div>
 					<ol className="list-decimal list-inside">
 						{recipe !== null
 							? recipe.steps.map((text) => {
-									return <li>{text}</li>;
+									return (
+										<>
+											<li key={text} className="m-2">
+												{text}
+												<br />
+												<br />
+											</li>
+										</>
+									);
 							  })
 							: null}
 					</ol>
 				</div>
 				<br />
 				<div className="border border-black rounded-2xl bg-gray-200">
-					<div className="text-center text-xl">
-						<b>材料</b>
+					<div className="text-center text-xl m-2">
+						<b>材料など</b>
 					</div>
-					<ul className="list-none list-inside">
-						{recipe !== null
-							? recipe.ingredients.map((text) => {
-									return (
-										<li key={text.name}>
-											<p>
-												{text.name}:{text.quantity}
-											</p>
-										</li>
-									);
-							  })
-							: null}
-					</ul>
+					<table className="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-200 text-gray-800">
+						<tbody>
+							<tr className="text-left border-b-2 border-gray-300">
+								<th
+									className="px-4 py-3 text-center"
+									key="zairyo"
+								>
+									材料
+								</th>
+								<th
+									className="px-4 py-3 text-center"
+									key="youryo"
+								>
+									容量
+								</th>
+							</tr>
+							{recipe !== null
+								? recipe.ingredients.map((text) => {
+										return (
+											<tr
+												key={text.name + text.quantity}
+												className="bg-gray-100 border-b border-gray-200"
+											>
+												<td
+													className="px-4 py-3"
+													key={
+														text.name +
+														"+" +
+														text.quantity
+													}
+												>
+													{text.name}
+												</td>
+												<td
+													className="px-4 py-3"
+													key={
+														text.name +
+														"-" +
+														text.quantity
+													}
+												>
+													{text.quantity}
+												</td>
+											</tr>
+										);
+								  })
+								: null}
+						</tbody>
+					</table>
 				</div>
 				<br />
-				<div className="text-center text-xl">
+				<div className="text-center text-xl m-2">
 					<b>関連レシピ</b>
 				</div>
 				<div className="grid grid-cols-2 gap-2">

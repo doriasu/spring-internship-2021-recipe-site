@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import Head from "../components/head";
 import lodash from "lodash";
-import { resourceUsage } from "node:process";
 export const SearchBar: FC = () => {
 	const [searchtext, setSearchtext] = useState("");
 	const [searchresult, setSearchresult] = useState("");
@@ -105,7 +104,7 @@ const mainPage: FC<mainProps> = (props) => {
 			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />
-				<div className="text-2xl">
+				<div className="text-2xl text-center">
 					<b>新着レシピ</b>
 				</div>
 				<br />
