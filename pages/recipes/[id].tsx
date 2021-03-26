@@ -155,7 +155,9 @@ const RecipePage: FC<Props> = (prop) => {
 													alt={addr.title}
 												/>
 											)}
-											<div className="text-center">{addr.title}</div>
+											<div className="text-center">
+												{addr.title}
+											</div>
 										</div>
 									</Link>
 								);

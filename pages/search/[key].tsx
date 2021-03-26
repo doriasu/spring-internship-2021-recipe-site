@@ -6,21 +6,34 @@ import { SearchBar } from "..";
 import { GetServerSideProps } from "next";
 import Head from "../../components/head";
 import Image from "next/image";
+import lodash from "lodash";
 type Props = {
 	recipes: Recipe[];
 	num: number | null;
+	keyword: string;
 };
 const searchPage: FC<Props> = (props) => {
 	const [searchtext, setSearchtext] = useState("");
 	const router = useRouter();
 	const [recipes, setRecipes] = useState<Recipe[]>(props.recipes);
-	const [pagenum, setPagenum] = useState<number>(props.num);
-	let key = router.query.key as string;
+	const [pagenum, setPagenum] = useState<number>(props.num ? props.num : 1);
+	const [keyword, setKeyword] = useState<string>(props.keyword);
 	let num: number = +router.query.num;
 	useEffect(() => {
-		setRecipes(props.recipes);
-		setPagenum(num ? num : 1);
-	}, [key, num]);
+		if (props.keyword !== keyword) {
+			setKeyword(props.keyword);
+			setRecipes(props.recipes);
+			setPagenum(1);
+		} else {
+			getPost();
+		}
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, [pagenum, props]);
 	let ogp_url: string;
 	for (let i = 0; i < props.recipes.length; i++) {
 		if (props.recipes[i].image_url !== null) {
@@ -28,22 +41,53 @@ const searchPage: FC<Props> = (props) => {
 			break;
 		}
 	}
+	const handleScroll = lodash.throttle(() => {
+		if (
+			Math.ceil(
+				window.innerHeight + document.documentElement.scrollTop
+			) !== document.documentElement.offsetHeight
+		) {
+			return;
+		}
+		setPagenum(pagenum + 1);
+	}, 200);
+
+	const getPost = async () => {
+		if (pagenum == 1) {
+			return;
+		}
+		const base_url = new URL(
+			"https://internship-recipe-api.ckpd.co/search"
+		);
+		base_url.searchParams.set("keyword", props.keyword);
+		if (pagenum && pagenum > 1) {
+			base_url.searchParams.set("page", String(pagenum));
+		}
+		const res = await fetch(base_url.toString(), {
+			headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
+		});
+		let get_recipes = await res.json();
+		get_recipes = get_recipes.recipes as Recipe[];
+		let postsNext = recipes.concat(get_recipes);
+		setRecipes(postsNext);
+	};
 	return (
 		<div className="bg-red-50 font-mono">
 			<Head
 				title="recipe research"
-				description={key + "の検索結果"}
+				description={props.keyword + "の検索結果"}
 				keyword="key"
 				image={ogp_url}
 				url={
-					"https://takuro-spring-internship-2021-recipe-site.vercel.app/search/"+key
+					"https://takuro-spring-internship-2021-recipe-site.vercel.app/search/" +
+					props.keyword
 				}
 			/>
 			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />
 				<div className="text-2xl">
-					<b>{key + "の検索結果"}</b>
+					<b>{props.keyword + "の検索結果"}</b>
 				</div>
 				<br />
 				<div className="grid grid-cols-2 gap-2">
@@ -73,7 +117,9 @@ const searchPage: FC<Props> = (props) => {
 												alt={r.title}
 											/>
 										)}
-										<div className="text-center">{r.title}</div>
+										<div className="text-center">
+											{r.title}
+										</div>
 									</div>
 								</Link>
 							) : null;
@@ -82,7 +128,7 @@ const searchPage: FC<Props> = (props) => {
 						<div>No recipes founded.</div>
 					)}
 				</div>
-				<br />
+				{/* <br />
 				<div className="grid grid-cols-2">
 					{pagenum > 1 ? (
 						<button
@@ -110,14 +156,14 @@ const searchPage: FC<Props> = (props) => {
 					>
 						Next
 					</button>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const key = String(context.params?.key);
-	const num = Number(context.query.num);
+	const num = Number(context.query.num ? context.query.num : "1");
 	const base_url = new URL("https://internship-recipe-api.ckpd.co/search");
 	base_url.searchParams.set("keyword", key);
 	if (num && num > 1) {
@@ -131,7 +177,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			recipes: recipes,
-			num: num
+			num: num,
+			keyword: key,
 		},
 	};
 };
