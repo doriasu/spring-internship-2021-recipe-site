@@ -35,7 +35,6 @@ const searchPage: FC<Props> = (props) => {
 		};
 	}, [pagenum, props]);
 	let ogp_url: string;
-	console.log(props.recipes)
 	for (let i = 0; i < props.recipes.length; i++) {
 		if (props.recipes[i].image_url !== null) {
 			ogp_url = props.recipes[i].image_url;
@@ -54,7 +53,6 @@ const searchPage: FC<Props> = (props) => {
 	}, 200);
 
 	const getPost = async () => {
-		console.log("GEETPOST")
 		if (pagenum == 1) {
 			return;
 		}
@@ -92,9 +90,9 @@ const searchPage: FC<Props> = (props) => {
 					<b>{props.keyword + "の検索結果"}</b>
 				</div>
 				<br />
-				{recipes.length>0 ?
+				{recipes.length > 0 ? (
 					<div className="grid grid-cols-2 gap-2">
-						{recipes? (
+						{recipes ? (
 							recipes.map((r) => {
 								return r ? (
 									<Link
@@ -131,7 +129,9 @@ const searchPage: FC<Props> = (props) => {
 							<div>No recipes founded.</div>
 						)}
 					</div>
-					: <div className="text-center text-2xl">Not Found</div>}
+				) : (
+					<div className="text-center text-2xl">Not Found</div>
+				)}
 			</div>
 		</div>
 	);
