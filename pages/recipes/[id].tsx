@@ -98,7 +98,7 @@ const RecipePage: FC<Props> = (prop) => {
 					<ol className="list-decimal list-inside">
 						{recipe !== null
 							? recipe.steps.map((text) => {
-									return <li>{text}</li>;
+									return <li key={text}>{text}</li>;
 							  })
 							: null}
 					</ol>

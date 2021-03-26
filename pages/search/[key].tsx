@@ -35,6 +35,7 @@ const searchPage: FC<Props> = (props) => {
 		};
 	}, [pagenum, props]);
 	let ogp_url: string;
+	console.log(props.recipes)
 	for (let i = 0; i < props.recipes.length; i++) {
 		if (props.recipes[i].image_url !== null) {
 			ogp_url = props.recipes[i].image_url;
@@ -53,6 +54,7 @@ const searchPage: FC<Props> = (props) => {
 	}, 200);
 
 	const getPost = async () => {
+		console.log("GEETPOST")
 		if (pagenum == 1) {
 			return;
 		}
@@ -86,77 +88,50 @@ const searchPage: FC<Props> = (props) => {
 			<div className="ml-4 mr-4">
 				<SearchBar />
 				<br />
-				<div className="text-2xl">
+				<div className="text-2xl text-center">
 					<b>{props.keyword + "の検索結果"}</b>
 				</div>
 				<br />
-				<div className="grid grid-cols-2 gap-2">
-					{recipes ? (
-						recipes.map((r) => {
-							return r ? (
-								<Link
-									key={r.id}
-									href={"/recipes/" + r.id}
-									passHref
-								>
-									<div className="border border-black rounded-2xl bg-gray-200">
-										{r.image_url ? (
-											<Image
-												className="rounded-2xl"
-												src={r.image_url}
-												width="166"
-												height="93"
-												alt={r.title}
-											/>
-										) : (
-											<Image
-												className="rounded-2xl"
-												src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
-												width="166"
-												height="93"
-												alt={r.title}
-											/>
-										)}
-										<div className="text-center">
-											{r.title}
+				{recipes.length>0 ?
+					<div className="grid grid-cols-2 gap-2">
+						{recipes? (
+							recipes.map((r) => {
+								return r ? (
+									<Link
+										key={r.id}
+										href={"/recipes/" + r.id}
+										passHref
+									>
+										<div className="border border-black rounded-2xl bg-gray-200">
+											{r.image_url ? (
+												<Image
+													className="rounded-2xl"
+													src={r.image_url}
+													width="166"
+													height="93"
+													alt={r.title}
+												/>
+											) : (
+												<Image
+													className="rounded-2xl"
+													src="https://raw.githubusercontent.com/doriasu/spring-internship-2021-recipe-site/develop/resource/noimage.png"
+													width="166"
+													height="93"
+													alt={r.title}
+												/>
+											)}
+											<div className="text-center">
+												{r.title}
+											</div>
 										</div>
-									</div>
-								</Link>
-							) : null;
-						})
-					) : (
-						<div>No recipes founded.</div>
-					)}
-				</div>
-				{/* <br />
-				<div className="grid grid-cols-2">
-					{pagenum > 1 ? (
-						<button
-							onClick={() => {
-								if (pagenum > 1) {
-									router.push({
-										pathname: "/search/" + key,
-										query: { num: pagenum - 1 },
-									});
-								}
-							}}
-						>
-							Prev
-						</button>
-					) : (
-						<div></div>
-					)}
-					<button
-						onClick={() => {
-							router.push({
-								pathname: "/search/" + key,
-								query: { num: pagenum + 1 },
-							});
-						}}
-					>
-						Next
-					</button>
-				</div> */}
+									</Link>
+								) : null;
+							})
+						) : (
+							<div>No recipes founded.</div>
+						)}
+					</div>
+					: <div className="text-center text-2xl">Not Found</div>}
 			</div>
 		</div>
 	);
@@ -173,7 +148,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		headers: { "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY },
 	});
 	let recipes = await res.json();
-	recipes = recipes.recipes as Recipe[];
+	if (recipes.message) {
+		recipes = [] as Recipe[];
+	} else {
+		recipes = recipes.recipes as Recipe[];
+	}
 	return {
 		props: {
 			recipes: recipes,
